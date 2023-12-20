@@ -140,14 +140,14 @@ const StudentTodo = () => {
             <>
               {studentDataOutPut.map((data, i) => (
                 <>
-                  <div className=" flex max-h-full overflow-auto flex-col pb-4 ">
+                  <div className=" flex max-h-full overflow-auto flex-col pb-2 lg:pb-4 ">
                     <div
-                      className={`flex items-end max-w-[526px] mt-3 w-full  ${data.editedBy === user.displayName
+                      className={`flex items-end max-w-[526px] mt-2 sm:mt-3 w-full  ${data.editedBy === user.displayName
                         ? "!justify-end ml-auto"
                         : "mr-auto"
                         }`}>
                       <div
-                        className={` mx-3 md:ml-5 md:mr-[30px] inline-flex md:items-end gap-2 md:gap-x-3 items-center ${data.editedBy === user.displayName
+                        className={`md:ml-5 md:mr-[30px] inline-flex md:items-end gap-2 md:gap-x-3 items-center ${data.editedBy === user.displayName
                           ? "flex-row-reverse"
                           : ""
                           }`}>
@@ -318,7 +318,7 @@ const StudentTodo = () => {
           )}
 
         </div>
-        <div className="bg-gradient-to-l from-blue-200 via-purple-100 min-h-24 max-h-24 flex justify-center items-center py-3 md:py-[18px] fixed bottom-0 w-full shadow-black shadow-2xl">
+        <div className="bg-gradient-to-l from-blue-200 via-purple-100 min-h-24 max-h-24 flex justify-center items-center py-3 md:py-[18px] fixed bottom-0 w-full shadow-black shadow-2xl backdrop-blur-[20px]">
           <form
             onSubmit={saveNewData}
             action=""
