@@ -135,7 +135,7 @@ const StudentTodo = () => {
       <section
         id="todov2"
         className="bg-[#F6F7F9] min-h-screen max-h-screen overflow-auto pt-14 flex flex-col justify-between ">
-        <div className="container mx-auto flex flex-col-reverse grow ">
+        <div className="container lg:max-w-[992px] xl:max-w-[1140px] 2xl:max-w-[1320px] mx-auto flex flex-col-reverse grow  pb-20 md:pb-24">
           {studentDataOutPut.length > 0 && (
             <>
               {studentDataOutPut.map((data, i) => (
@@ -203,19 +203,75 @@ const StudentTodo = () => {
                               </li>
                             </ul>
                           </div>
-                          <span className="time_stamp relative overflow-visible">
+                          {data.editedBy === user.displayName && (
+                            <div
+                              className={`message-box-popup absolute right-0 translate-y-0 -top-3 transition-all duration-300 ${buttonsHandler.toggleMessagePopup === i
+                                ? "scale-100"
+                                : "scale-0"
+                                }`}>
+                              {" "}
+                              <span
+                                onClick={() =>
+                                  setButtonsHandler({
+                                    toggleMessagePopup: null,
+                                  })
+                                }
+                                className=" cross-icon">
+                                +
+                              </span>
+                              <ul className="option-ul">
+                                <li
+                                  onClick={() => {
+                                    handleEditClick(data);
+                                    setButtonsHandler({
+                                      toggleMessagePopup: null,
+                                    });
+                                  }}>
+                                  <span onClick={() => setHandleUpdate(true)}>
+                                    {" "}
+                                    Edit
+                                  </span>
+                                </li>
+                                <li
+                                  onClick={() => {
+                                    hideStudentInfo(data.id);
+                                    setButtonsHandler({
+                                      toggleMessagePopup: null,
+                                    });
+                                  }}>
+                                  Remove
+                                </li>
+                                <li
+                                  onClick={() => {
+                                    setButtonsHandler({
+                                      toggleMessagePopup: null,
+                                      toggleEditorInfo: i,
+                                    });
+                                  }}>
+                                  {data.timestamp !== data.timestamp2 && (
+                                    <span>Edited By</span>
+                                  )}
+                                </li>
+                              </ul>
+                            </div>
+                          )}
+
+                          <div className="time_stamp relative overflow-visible flex justify-between w-full items-center -mb-2">
                             <span
-                              onClick={() =>
-                                setButtonsHandler({ toggleMessagePopup: i })
-                              }
-                              className={`absolute top-0 left-0  w-full flex items-center justify-center pointer-events-none opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:pointer-events-auto cursor-pointer ${buttonsHandler.toggleMessagePopup === i
-                                ? " pointer-events-auto opacity-100"
-                                : ""
+                              className={`absolute top-0 right-0  w-full flex items-center justify-end pointer-events-none opacity-0 transition-all duration-300   ${data.editedBy === user.displayName &&
+                                `group-hover:opacity-100 group-hover:pointer-events-auto`
+                                } h-[80%]${buttonsHandler.toggleMessagePopup === i
+                                  ? " pointer-events-auto opacity-100"
+                                  : ""
                                 } ${data.editedBy === user.displayName
                                   ? "bg-[#EBF1FF] "
                                   : "bg-white"
                                 }`}>
                               <svg
+                                onClick={() =>
+                                  setButtonsHandler({ toggleMessagePopup: i })
+                                }
+                                className="cursor-pointer"
                                 width="24"
                                 height="24"
                                 viewBox="0 0 24 24"
@@ -238,11 +294,18 @@ const StudentTodo = () => {
                                 />
                               </svg>
                             </span>
-                            {data.getHours}:
-                            {data.getMinuts < 10
-                              ? 0 + data.getMinuts
-                              : data.getMinuts}
-                          </span>
+                            {data.timestamp !== data.timestamp2 && (
+                              <h4 className="absolute left-0 top-0 font-light duration-300 select-none">
+                                <span>Edited</span>
+                              </h4>
+                            )}
+                            <span className="inline-block select-none">
+                              {data.getHours}:
+                              {data.getMinuts < 10
+                                ? 0 + data.getMinuts
+                                : data.getMinuts}
+                            </span>
+                          </div>
                         </div>{" "}
                       </div>
                     </div>{" "}
@@ -255,16 +318,16 @@ const StudentTodo = () => {
           )}
 
         </div>
-        <div className="bg-white min-h-24 max-h-24 flex justify-center items-center py-[18px] fixed bottom-0 w-full">
+        <div className="bg-white min-h-24 max-h-24 flex justify-center items-center py-3 md:py-[18px] fixed bottom-0 w-full">
           <form
             onSubmit={saveNewData}
             action=""
-            className={`my-4 w-full  ${handleUpdate === true ? "hidden" : "block"
+            className={`md:my-3 w-full  ${handleUpdate === true ? "hidden" : "block"
               }  `}>
             <div className="flex flex-wrap justify-center">
-              <div className="my-2 px-2 w-full md:w-8/12 mx-1 relative">
+              <div className="px-2 w-full md:w-8/12 mx-1 relative">
                 <input
-                  className="w-full border-[1px] pl-4 pr-20 py-2 border-[#6297e1] rounded-[8px] outline-none"
+                  className="w-full border-[1px] pl-4 pr-20 py-2 md:py-3 border-[#6297e1] rounded-[8px] outline-none"
                   type="text"
                   name="name"
                   placeholder="Message..."
