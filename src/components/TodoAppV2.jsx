@@ -29,6 +29,7 @@ const StudentTodo = () => {
   const buttons = [
     {
       toggleMessagePopup: null,
+      toggleEditorInfo: null,
       toggleMessagePopupSearched: null,
       currentMsgIndex: null,
       toggleSearchPage: false,
@@ -172,52 +173,66 @@ const StudentTodo = () => {
                             {data.editedBy}
                           </h4>
                           <p>{data.name}</p>
-                          <div
-                            className={`message-box-popup absolute right-0 translate-y-0 -top-3 transition-all duration-300 ${
-                              buttonsHandler.toggleMessagePopup === i
-                                ? "scale-100"
-                                : "scale-0"
-                            }`}>
-                            {" "}
-                            <span
-                              onClick={() =>
-                                setButtonsHandler({
-                                  toggleMessagePopup: null,
-                                })
-                              }
-                              className=" cross-icon">
-                              +
-                            </span>
-                            <ul className="option-ul">
-                              <li
-                                onClick={() => {
-                                  handleEditClick(data);
+                          {data.editedBy === user.displayName && (
+                            <div
+                              className={`message-box-popup absolute right-0 translate-y-0 -top-3 transition-all duration-300 ${
+                                buttonsHandler.toggleMessagePopup === i
+                                  ? "scale-100"
+                                  : "scale-0"
+                              }`}>
+                              {" "}
+                              <span
+                                onClick={() =>
                                   setButtonsHandler({
                                     toggleMessagePopup: null,
-                                  });
-                                }}>
-                                <span onClick={() => setHandleUpdate(true)}>
-                                  {" "}
-                                  Edit
-                                </span>
-                              </li>
-                              <li
-                                onClick={() => {
-                                  hideStudentInfo(data.id);
-                                  setButtonsHandler({
-                                    toggleMessagePopup: null,
-                                  });
-                                }}>
-                                Remove
-                              </li>
-                            </ul>
-                          </div>
-                          <span className="time_stamp relative overflow-visible">
+                                  })
+                                }
+                                className=" cross-icon">
+                                +
+                              </span>
+                              <ul className="option-ul">
+                                <li
+                                  onClick={() => {
+                                    handleEditClick(data);
+                                    setButtonsHandler({
+                                      toggleMessagePopup: null,
+                                    });
+                                  }}>
+                                  <span onClick={() => setHandleUpdate(true)}>
+                                    {" "}
+                                    Edit
+                                  </span>
+                                </li>
+                                <li
+                                  onClick={() => {
+                                    hideStudentInfo(data.id);
+                                    setButtonsHandler({
+                                      toggleMessagePopup: null,
+                                    });
+                                  }}>
+                                  Remove
+                                </li>
+                                <li
+                                  onClick={() => {
+                                    setButtonsHandler({
+                                      toggleMessagePopup: null,
+                                      toggleEditorInfo: i,
+                                    });
+                                  }}>
+                                  {data.timestamp !== data.timestamp2 && (
+                                    <span>Edited By</span>
+                                  )}
+                                </li>
+                              </ul>
+                            </div>
+                          )}
+
+                          <div className="time_stamp relative overflow-visible flex justify-between w-full items-center -mb-2">
                             <span
-                              onClick={() =>
-                                setButtonsHandler({ toggleMessagePopup: i })
-                              }
-                              className={`absolute top-0 left-0  w-full flex items-center justify-center pointer-events-none opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:pointer-events-auto cursor-pointer ${
+                              className={`absolute top-0 right-0  w-full flex items-center justify-end pointer-events-none opacity-0 transition-all duration-300   ${
+                                data.editedBy === user.displayName &&
+                                `group-hover:opacity-100 group-hover:pointer-events-auto`
+                              } h-[80%]${
                                 buttonsHandler.toggleMessagePopup === i
                                   ? " pointer-events-auto opacity-100"
                                   : ""
@@ -227,6 +242,10 @@ const StudentTodo = () => {
                                   : "bg-white"
                               }`}>
                               <svg
+                                onClick={() =>
+                                  setButtonsHandler({ toggleMessagePopup: i })
+                                }
+                                className="cursor-pointer"
                                 width="24"
                                 height="24"
                                 viewBox="0 0 24 24"
@@ -249,11 +268,18 @@ const StudentTodo = () => {
                                 />
                               </svg>
                             </span>
-                            {data.getHours}:
-                            {data.getMinuts < 10
-                              ? 0 + data.getMinuts
-                              : data.getMinuts}
-                          </span>
+                            {data.timestamp !== data.timestamp2 && (
+                              <h4 className="absolute left-0 top-0 font-light duration-300 select-none">
+                                <span>Edited</span>
+                              </h4>
+                            )}
+                            <span className="inline-block select-none">
+                              {data.getHours}:
+                              {data.getMinuts < 10
+                                ? 0 + data.getMinuts
+                                : data.getMinuts}
+                            </span>
+                          </div>
                         </div>{" "}
                       </div>
                     </div>{" "}
