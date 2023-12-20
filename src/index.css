@@ -51,7 +51,7 @@ input:hover {
   align-self: stretch;
   border-radius: 16px 16px 0px 16px;
   box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.15);
-  @apply bg-[#EBF1FF] flex flex-col justify-end items-end;
+  @apply bg-[#EBF1FF] flex flex-col justify-end items-end min-w-[100px];
 }
 .messagebox2 {
   border-radius: 16px 16px 16px 0px;
@@ -71,7 +71,7 @@ input:hover {
   @apply w-10 h-10 rounded-full bg-white;
 }
 .messagebox p {
-  @apply font-normal leading-[150%] font-inter text-[#181D25] text-base;
+  @apply font-normal leading-[150%] font-inter text-[#181D25] text-base w-full;
 }
 
 .time_stamp {

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useFirebase } from "./FirebaseDataProv";
 import Swal from "sweetalert2";
 import Pract from "./Pract";
+import TodoAppV2 from "./TodoAppV2";
 
 const SignUpForm = () => {
   const { signUpWithEmail, signInWithGoogle, error, user } = useFirebase();
@@ -173,7 +174,8 @@ const SignUpForm = () => {
         </section>
       ) : (
         // <TodoApp />
-        <Pract />
+        // <Pract />
+        <TodoAppV2 />
       )}
     </>
   );
