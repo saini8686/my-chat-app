@@ -132,10 +132,10 @@ const StudentTodo = () => {
   };
   return (
     <>
-      <section
+      <div
         id="todov2"
-        className="bg-[#F6F7F9] min-h-screen max-h-screen overflow-auto pt-14 flex flex-col justify-between ">
-        <div className="container lg:max-w-[992px] xl:max-w-[1140px] 2xl:max-w-[1320px] mx-auto flex flex-col-reverse grow  pb-20 md:pb-24">
+        className="bg-[#F6F7F9] min-h-screen max-h-screen overflow-auto pt-14 flex flex-col justify-between bg-gradient-to-b from-red-200 to-yellow-100">
+        <div className="container lg:max-w-[992px] xl:max-w-[1140px] 2xl:max-w-[1320px] mx-auto flex flex-col-reverse grow  pb-16 md:pb-24">
           {studentDataOutPut.length > 0 && (
             <>
               {studentDataOutPut.map((data, i) => (
@@ -318,7 +318,7 @@ const StudentTodo = () => {
           )}
 
         </div>
-        <div className="bg-white min-h-24 max-h-24 flex justify-center items-center py-3 md:py-[18px] fixed bottom-0 w-full">
+        <div className="bg-gradient-to-r from-blue-200 via-purple-100 to-pink-200 min-h-24 max-h-24 flex justify-center items-center py-3 md:py-[18px] fixed bottom-0 w-full">
           <form
             onSubmit={saveNewData}
             action=""
@@ -383,7 +383,8 @@ const StudentTodo = () => {
             </div>
           </form>
         </div>
-      </section>
+
+      </div>
     </>
   );
 };
