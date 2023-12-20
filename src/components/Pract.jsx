@@ -134,7 +134,7 @@ const StudentTodo = () => {
     <>
       <div
         id="todov2"
-        className="bg-[#F6F7F9] min-h-screen max-h-screen overflow-auto pt-14 flex flex-col justify-between bg-gradient-to-b from-red-200 to-yellow-100">
+        className="bg-[#F6F7F9] min-h-screen max-h-screen overflow-auto pt-14 flex flex-col justify-between bg-gradient-to-t from-red-200 to-yellow-100">
         <div className="container lg:max-w-[992px] xl:max-w-[1140px] 2xl:max-w-[1320px] mx-auto flex flex-col-reverse grow  pb-16 md:pb-24">
           {studentDataOutPut.length > 0 && (
             <>
@@ -318,7 +318,7 @@ const StudentTodo = () => {
           )}
 
         </div>
-        <div className="bg-gradient-to-r from-blue-200 via-purple-100 to-pink-200 min-h-24 max-h-24 flex justify-center items-center py-3 md:py-[18px] fixed bottom-0 w-full">
+        <div className="bg-gradient-to-l from-blue-200 via-purple-100 min-h-24 max-h-24 flex justify-center items-center py-3 md:py-[18px] fixed bottom-0 w-full shadow-black shadow-2xl">
           <form
             onSubmit={saveNewData}
             action=""
@@ -327,7 +327,7 @@ const StudentTodo = () => {
             <div className="flex flex-wrap justify-center">
               <div className="px-2 w-full md:w-8/12 mx-1 relative">
                 <input
-                  className="w-full border-[1px] pl-4 pr-20 py-2 md:py-3 border-[#6297e1] rounded-[8px] outline-none"
+                  className="w-full border-[1px] pl-4 pr-11 md:pr-[50px] py-2 md:py-3 border-[#6297e1] rounded-[8px] outline-none"
                   type="text"
                   name="name"
                   placeholder="Message..."
@@ -336,12 +336,15 @@ const StudentTodo = () => {
                   }
                   value={studentData.name}
                 />{" "}
-                <div className="text-center absolute top-1/2 -translate-y-1/2 right-[13px]">
+                <div className="text-center absolute top-1/2 -translate-y-1/2 right-[13px] flex justify-center items-center">
                   {studentData.name.trim() !== "" && (
                     <button
-                      className="px-5 py-[4px] bg-slate-800 text-white hover:bg-slate-200 hover:text-black transition-all duration-300 rounded-[4px]"
+                      className="transition-all duration-300 pr-2 hover:scale-[1.1]"
                       type="submit">
-                      Send
+                      <svg width="25" height="25" className="w-[20px] md:w-[25px]" viewBox="0 0 29 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0.429688 24.1667V15.4167L12.0964 12.5L0.429688 9.58333V0.833328L28.138 12.5L0.429688 24.1667Z" fill="black" />
+                      </svg>
+
                     </button>
                   )}
                 </div>
@@ -352,7 +355,7 @@ const StudentTodo = () => {
             onSubmit={handleUpdateData}
             action=""
             className={`my-4 w-full  ${handleUpdate ? "block" : "hidden"} `}>
-            <div className="flex flex-wrap justify-center ">
+            <div className="flex flex-wrap justify-center">
               <div className="my-2 px-2 w-full md:w-8/12 mx-1 relative">
                 <input
                   className="w-full border-[1px] pl-4 pr-40 py-2 border-[#6297e1] rounded-[8px] outline-none"
