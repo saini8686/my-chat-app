@@ -45,7 +45,7 @@ input:hover {
 }
 
 .container {
-  @apply mx-auto px-5 lg:px-0;
+  @apply mx-auto px-3 md:px-5 lg:px-0;
 }
 
 .placeholder_input {
