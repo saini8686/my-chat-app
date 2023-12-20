@@ -21,10 +21,10 @@ const StudentTodo = () => {
   const [studentData, setStudentData] = useState(studentDataProvider);
   const [printStudentData, setPrintStudentData] = useState([]);
   const [SearchedData, setSearchedData] = useState("");
-  const [confermationOverlay, setconfermationOverlay] = useState(-1);
+  // const [confermationOverlay, setconfermationOverlay] = useState(-1);
   const [openMenuBar, setopenMenuBar] = useState(null);
   const [selectedStudent, setSelectedStudent] = useState(null);
-  const [updatingAgent, setupdatingAgent] = useState(null);
+  // const [updatingAgent, setupdatingAgent] = useState(null);
   const [handleUpdate, setHandleUpdate] = useState(false);
   const buttons = [
     {
