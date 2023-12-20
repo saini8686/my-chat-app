@@ -29,7 +29,6 @@ const StudentTodo = () => {
   const buttons = [
     {
       toggleMessagePopup: null,
-      toggleEditorInfo: null,
       toggleMessagePopupSearched: null,
       currentMsgIndex: null,
       toggleSearchPage: false,
@@ -211,17 +210,6 @@ const StudentTodo = () => {
                                     });
                                   }}>
                                   Remove
-                                </li>
-                                <li
-                                  onClick={() => {
-                                    setButtonsHandler({
-                                      toggleMessagePopup: null,
-                                      toggleEditorInfo: i,
-                                    });
-                                  }}>
-                                  {data.timestamp !== data.timestamp2 && (
-                                    <span>Edited By</span>
-                                  )}
                                 </li>
                               </ul>
                             </div>
