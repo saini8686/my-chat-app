@@ -136,7 +136,7 @@ input:hover {
 }
 
 #login-page .lable-parent input {
-  @apply text-white font-inter text-base leading-[1] font-medium w-full border-b-2 border-white border-solid bg-transparent min-h-[32px] mb-5 md:mb-7 outline-none px-4 tracking-[.5px];
+  @apply text-white font-inter text-xs md:text-base leading-[1] font-medium w-full border-b-2 border-white border-solid bg-transparent min-h-[25px] md:min-h-[32px] mb-6 md:mb-7 outline-none md:px-4 mt-2 tracking-[.5px];
 }
 
 #login-page .btn-parent {
