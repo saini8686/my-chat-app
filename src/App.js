@@ -3,6 +3,7 @@ import AuthComponent from "./components/AuthComponent";
 import SignUpForm from "./components/SignUpForm";
 import Pract from "./components/Pract";
 import TodoAppV2 from "./components/TodoAppV2";
+// import ImageUploadForm from "./components/ImageUploadForm";
 
 function App() {
   return (
@@ -10,8 +11,9 @@ function App() {
       {/* <TodoApp /> */}
       {/* <Pract /> */}
       {/* <AuthComponent /> */}
-      <SignUpForm />
-      {/* <TodoAppV2 /> */}
+      {/* <SignUpForm /> */}
+      {/* <ImageUploadForm /> */}
+      <TodoAppV2 />
     </>
   );
 }
