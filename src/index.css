@@ -20,11 +20,13 @@
   background-color: #000000d1;
   color: white;
 }
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
 /* input {
   outline: none;
   transition: all 300ms ease-in-out;
@@ -41,35 +43,43 @@ input:hover {
 ::-webkit-scrollbar {
   @apply hidden;
 }
+
 .container {
   @apply mx-auto px-5 lg:px-0;
 }
+
 .placeholder_input {
   @apply placeholder:text-[#929FB1] placeholder:leading-[150%] placeholder:font-inter placeholder:font-normal placeholder:text-base;
 }
+
 .messagebox {
   align-self: stretch;
   border-radius: 16px 16px 0px 16px;
   box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.15);
   @apply bg-[#EBF1FF] flex flex-col justify-end items-end min-w-[100px];
 }
+
 .messagebox2 {
   border-radius: 16px 16px 16px 0px;
   box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.15);
   @apply bg-white flex flex-col justify-start items-start;
 }
+
 .message-box-popup {
   box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.15);
   @apply bg-white flex flex-col justify-start items-start rounded-md px-2 pb-1 pt-4 z-50;
 }
+
 .profile {
   box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.15);
-  @apply w-14 h-14 rounded-full bg-white;
+  @apply w-10 h-10 md:w-14 md:h-14 rounded-full bg-white;
 }
+
 .profile-nav {
   box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.15);
   @apply w-10 h-10 rounded-full bg-white;
 }
+
 .messagebox p {
   @apply font-normal leading-[150%] font-inter text-[#181D25] text-base w-full;
 }
@@ -81,6 +91,7 @@ input:hover {
 .option-ul li {
   @apply text-[#929FB1] text-left font-inter text-[13px] font-normal leading-[150%] inline-block p-[2px] mb-[2px] border-[.5px] border-transparent border-solid rounded-md w-full hover:border-[#929FB1] transition-all duration-300 cursor-pointer;
 }
+
 .cross-icon {
   @apply text-[#929FB1] text-left font-inter text-[24px] font-normal inline-block absolute top-[9px] right-[2px] rotate-45 transition-all duration-300 cursor-pointer leading-[0];
 }
@@ -89,41 +100,53 @@ input:hover {
 .signup-container {
   @apply max-w-[700px] border-solid border-2 border-white pt-14 min-h-[80vh] mx-auto backdrop-blur-[10px] bg-[#54565c44] px-16 pb-36 rounded-[50px];
 }
+
 #login-page h2 {
   @apply text-white font-inter text-[52px] font-bold leading-[1] text-center py-4;
 }
+
 #login-page h3 {
   @apply text-white font-inter text-base font-medium leading-[1] text-center mb-[70px];
 }
+
 #login-page h4 {
   @apply text-red-500 font-inter text-base font-medium leading-[1] text-start -mt-6;
 }
+
 #login-page h3 span,
 .name-logo {
   @apply cursor-pointer text-[#6297e1];
 }
+
 .name-logo {
   @apply text-xs whitespace-nowrap;
 }
+
 #login-page .lable-parent label,
 #login-page .lable-parent input {
   @apply block;
 }
+
 #login-page .lable-parent {
   @apply flex flex-col max-w-[520px];
 }
+
 #login-page .lable-parent label {
   @apply text-white font-inter text-lg leading-[1] font-bold;
 }
+
 #login-page .lable-parent input {
   @apply text-white font-inter text-base leading-[1] font-medium w-full border-b-2 border-white border-solid bg-transparent min-h-[32px] mb-7 outline-none px-4 tracking-[.5px];
 }
+
 #login-page .btn-parent {
   @apply flex justify-center;
 }
+
 #login-page button {
   @apply rounded-[10px] bg-[#6297e1] py-4 mt-10 mb-[30px] px-24 mx-auto font-semibold text-white text-base font-inter leading-[1] hover:bg-[#3a4758] transition-all duration-300;
 }
+
 #login-page .shaprator {
   @apply flex justify-center items-center relative before:absolute before:w-[35%] before:h-[2px] before:bg-white before:rounded-[3px] before:right-0 before:top-1/2 before:-translate-y-1/2 after:absolute after:w-[35%] after:h-[2px] after:bg-white after:rounded-[3px] after:left-0 after:top-1/2 after:-translate-y-1/2;
 }

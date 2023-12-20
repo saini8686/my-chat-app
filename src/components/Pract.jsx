@@ -142,37 +142,33 @@ const StudentTodo = () => {
                 <>
                   <div className=" flex max-h-full overflow-auto flex-col pb-4 ">
                     <div
-                      className={`flex items-end max-w-[526px] mt-3 w-full  ${
-                        data.editedBy === user.displayName
-                          ? "!justify-end ml-auto"
-                          : "mr-auto"
-                      }`}>
-                      <div
-                        className={`ml-5 mr-[30px] inline-flex items-end gap-x-3 ${
-                          data.editedBy === user.displayName
-                            ? "flex-row-reverse"
-                            : ""
+                      className={`flex items-end max-w-[526px] mt-3 w-full  ${data.editedBy === user.displayName
+                        ? "!justify-end ml-auto"
+                        : "mr-auto"
                         }`}>
+                      <div
+                        className={` mx-3 md:ml-5 md:mr-[30px] inline-flex md:items-end gap-2 md:gap-x-3 items-center ${data.editedBy === user.displayName
+                          ? "flex-row-reverse"
+                          : ""
+                          }`}>
                         <div>
-                          <div className="profile "></div>
+                          <div className=" profile "></div>
                         </div>
                         <div
-                          className={` py-2 px-3 relative group ${
-                            data.editedBy === user.displayName
-                              ? "messagebox "
-                              : "messagebox2"
-                          } `}>
+                          className={`p-2 md:py-2 md:px-3 relative group ${data.editedBy === user.displayName
+                            ? "messagebox "
+                            : "messagebox2"
+                            } `}>
                           <h4 className=" absolute top-0 -translate-y-1/2 left-0 name-logo">
                             {" "}
                             {data.editedBy}
                           </h4>
-                          <p>{data.name}</p>
+                          <p className="text-sm md:text-base">{data.name}</p>
                           <div
-                            className={`message-box-popup absolute right-0 translate-y-0 -top-3 transition-all duration-300 ${
-                              buttonsHandler.toggleMessagePopup === i
-                                ? "scale-100"
-                                : "scale-0"
-                            }`}>
+                            className={`message-box-popup absolute right-0 translate-y-0 -top-3 transition-all duration-300 ${buttonsHandler.toggleMessagePopup === i
+                              ? "scale-100"
+                              : "scale-0"
+                              }`}>
                             {" "}
                             <span
                               onClick={() =>
@@ -212,15 +208,13 @@ const StudentTodo = () => {
                               onClick={() =>
                                 setButtonsHandler({ toggleMessagePopup: i })
                               }
-                              className={`absolute top-0 left-0  w-full flex items-center justify-center pointer-events-none opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:pointer-events-auto cursor-pointer ${
-                                buttonsHandler.toggleMessagePopup === i
-                                  ? " pointer-events-auto opacity-100"
-                                  : ""
-                              } ${
-                                data.editedBy === user.displayName
+                              className={`absolute top-0 left-0  w-full flex items-center justify-center pointer-events-none opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:pointer-events-auto cursor-pointer ${buttonsHandler.toggleMessagePopup === i
+                                ? " pointer-events-auto opacity-100"
+                                : ""
+                                } ${data.editedBy === user.displayName
                                   ? "bg-[#EBF1FF] "
                                   : "bg-white"
-                              }`}>
+                                }`}>
                               <svg
                                 width="24"
                                 height="24"
@@ -254,22 +248,21 @@ const StudentTodo = () => {
                     </div>{" "}
                   </div>
 
-                 
+
                 </>
               ))}
             </>
           )}
-         
+
         </div>
         <div className="bg-white min-h-24 max-h-24 flex justify-center items-center py-[18px] fixed bottom-0 w-full">
           <form
             onSubmit={saveNewData}
             action=""
-            className={`my-4 w-full  ${
-              handleUpdate === true ? "hidden" : "block"
-            }  `}>
+            className={`my-4 w-full  ${handleUpdate === true ? "hidden" : "block"
+              }  `}>
             <div className="flex flex-wrap justify-center">
-              <div className="my-2 px-2 w-8/12 mx-1 relative">
+              <div className="my-2 px-2 w-full md:w-8/12 mx-1 relative">
                 <input
                   className="w-full border-[1px] pl-4 pr-20 py-2 border-[#6297e1] rounded-[8px] outline-none"
                   type="text"
@@ -297,7 +290,7 @@ const StudentTodo = () => {
             action=""
             className={`my-4 w-full  ${handleUpdate ? "block" : "hidden"} `}>
             <div className="flex flex-wrap justify-center ">
-              <div className="my-2 px-2 w-8/12 mx-1 relative">
+              <div className="my-2 px-2 w-full md:w-8/12 mx-1 relative">
                 <input
                   className="w-full border-[1px] pl-4 pr-40 py-2 border-[#6297e1] rounded-[8px] outline-none"
                   type="text"
@@ -321,7 +314,6 @@ const StudentTodo = () => {
                     className="px-5 py-[4px] bg-slate-800 text-white hover:bg-slate-200 hover:text-black transition-all duration-300 rounded-[4px] "
                     type="submit">
                     update
-                    
                   </button>
                 </div>
               </div>

@@ -174,8 +174,8 @@ const SignUpForm = () => {
         </section>
       ) : (
         // <TodoApp />
-        // <Pract />
-        <TodoAppV2 />
+        <Pract />
+        // <TodoAppV2 />
       )}
     </>
   );
