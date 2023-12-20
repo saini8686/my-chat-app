@@ -134,7 +134,7 @@ const StudentTodo = () => {
     <>
       <div
         id="todov2"
-        className="bg-[#F6F7F9] min-h-screen max-h-screen overflow-auto pt-14 flex flex-col justify-between bg-gradient-to-t from-red-200 to-yellow-100">
+        className="bg-[#F6F7F9] min-h-screen max-h-screen overflow-auto pt-14 flex flex-col justify-between bg-gradient-to-t from-red-200 to-[#EBF1FF]">
         <div className="container lg:max-w-[992px] xl:max-w-[1140px] 2xl:max-w-[1320px] mx-auto flex flex-col-reverse grow  pb-16 md:pb-24">
           {studentDataOutPut.length > 0 && (
             <>
@@ -318,7 +318,7 @@ const StudentTodo = () => {
           )}
 
         </div>
-        <div className="bg-gradient-to-l from-blue-200 via-purple-100 min-h-24 max-h-24 flex justify-center items-center py-3 md:py-[18px] fixed bottom-0 w-full shadow-black shadow-2xl backdrop-blur-[20px]">
+        <div className="bg-gradient-to-l from-[#EBF1FF] via-purple-100 min-h-24 max-h-24 flex justify-center items-center py-3 md:py-[18px] fixed bottom-0 w-full shadow-black shadow-2xl backdrop-blur-[20px]">
           <form
             onSubmit={saveNewData}
             action=""
