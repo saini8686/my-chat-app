@@ -98,15 +98,15 @@ input:hover {
 
 /* login page  */
 .signup-container {
-  @apply max-w-[700px] border-solid border-2 border-white pt-14 min-h-[80vh] mx-auto backdrop-blur-[10px] bg-[#54565c44] px-16 pb-36 rounded-[50px];
+  @apply max-w-[700px] border-solid border-2 border-white md:pt-14 min-h-[80vh] mx-auto backdrop-blur-[10px] bg-[#54565c44] p-4 md:px-16 md:pb-36 rounded-3xl md:rounded-[50px];
 }
 
 #login-page h2 {
-  @apply text-white font-inter text-[52px] font-bold leading-[1] text-center py-4;
+  @apply text-white font-inter text-4xl md:text-[52px] font-bold leading-[1] text-center py-4;
 }
 
 #login-page h3 {
-  @apply text-white font-inter text-base font-medium leading-[1] text-center mb-[70px];
+  @apply text-white font-inter text-base font-medium leading-[1] text-center mb-8 md:mb-[70px];
 }
 
 #login-page h4 {
@@ -132,11 +132,11 @@ input:hover {
 }
 
 #login-page .lable-parent label {
-  @apply text-white font-inter text-lg leading-[1] font-bold;
+  @apply text-white font-inter text-sm md:text-lg leading-[1] font-bold;
 }
 
 #login-page .lable-parent input {
-  @apply text-white font-inter text-base leading-[1] font-medium w-full border-b-2 border-white border-solid bg-transparent min-h-[32px] mb-7 outline-none px-4 tracking-[.5px];
+  @apply text-white font-inter text-base leading-[1] font-medium w-full border-b-2 border-white border-solid bg-transparent min-h-[32px] mb-5 md:mb-7 outline-none px-4 tracking-[.5px];
 }
 
 #login-page .btn-parent {
@@ -144,11 +144,11 @@ input:hover {
 }
 
 #login-page button {
-  @apply rounded-[10px] bg-[#6297e1] py-4 mt-10 mb-[30px] px-24 mx-auto font-semibold text-white text-base font-inter leading-[1] hover:bg-[#3a4758] transition-all duration-300;
+  @apply rounded-[10px] bg-[#6297e1] py-3 md:py-4 mt-8 md:mt-10 mb-[30px] px-16 md:px-24 mx-auto font-semibold text-white text-base font-inter leading-[1] hover:bg-[#3a4758] transition-all duration-300;
 }
 
 #login-page .shaprator {
-  @apply flex justify-center items-center relative before:absolute before:w-[35%] before:h-[2px] before:bg-white before:rounded-[3px] before:right-0 before:top-1/2 before:-translate-y-1/2 after:absolute after:w-[35%] after:h-[2px] after:bg-white after:rounded-[3px] after:left-0 after:top-1/2 after:-translate-y-1/2;
+  @apply flex justify-center items-center relative before:absolute before:w-[25%] md:before:w-[35%] before:h-[2px] before:bg-white before:rounded-[3px] before:right-0 before:top-1/2 before:-translate-y-1/2 after:absolute after:w-[25%] md:after:w-[35%] after:h-[2px] after:bg-white after:rounded-[3px] after:left-0 after:top-1/2 after:-translate-y-1/2;
 }
 
 #login-page .shaprator-text {

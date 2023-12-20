@@ -52,11 +52,8 @@ const SignUpForm = () => {
           id="login-page"
           className="bg-[#243151] min-h-screen flex justify-center items-center py-10">
           <div className="container ">
-            <div className="signup-container">
+            <div className=" signup-container">
               <h2>Get Started</h2>
-              {/* <h2>{user.displayName}</h2>
-              <h2>{user.email}</h2> */}
-
               <h3>
                 Already have an Account ? <span>Log in</span>
               </h3>
@@ -87,8 +84,8 @@ const SignUpForm = () => {
                     "Invalid email format. Please provide a valid email address." ||
                     (error ===
                       "An account with this email already exists. Please sign in." && (
-                      <h4>{error} </h4>
-                    ))}{" "}
+                        <h4>{error} </h4>
+                      ))}{" "}
                 </div>
 
                 {/* password lable */}
@@ -104,8 +101,8 @@ const SignUpForm = () => {
                   />
                   {error ===
                     "The password is too weak. Please choose a stronger password." && (
-                    <h4>{error} </h4>
-                  )}
+                      <h4>{error} </h4>
+                    )}
                 </div>
                 <div className="btn-parent">
                   {" "}
@@ -115,10 +112,10 @@ const SignUpForm = () => {
               <div className="shaprator">
                 <span className=" shaprator-text">Or Sign Up with </span>
               </div>
-              <div className="flex mt-[30px] gap-x-[30px] justify-center items-center">
+              <div className="flex mt-[30px] gap-4 md:gap-x-[30px] justify-center items-center">
                 <svg
                   onClick={signInWithGoogle}
-                  className="cursor-pointer"
+                  className="cursor-pointer w-[35px] md:w-[50px]"
                   width="50"
                   height="50"
                   viewBox="0 0 50 50"
@@ -144,7 +141,7 @@ const SignUpForm = () => {
                 </svg>
 
                 <svg
-                  className="cursor-pointer"
+                  className="cursor-pointer w-[35px] md:w-[50px]"
                   width="50"
                   height="50"
                   viewBox="0 0 50 50"
