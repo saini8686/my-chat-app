@@ -62,7 +62,7 @@ input:hover {
 .messagebox2 {
   border-radius: 16px 16px 16px 0px;
   box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.15);
-  @apply bg-white flex flex-col justify-start items-start min-w-[100px] ;
+  @apply bg-white flex flex-col justify-start items-start min-w-[100px];
 }
 
 .message-box-popup {
