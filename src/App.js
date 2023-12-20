@@ -3,7 +3,7 @@ import AuthComponent from "./components/AuthComponent";
 import SignUpForm from "./components/SignUpForm";
 import Pract from "./components/Pract";
 import TodoAppV2 from "./components/TodoAppV2";
-// import ImageUploadForm from "./components/ImageUploadForm";
+import ImageUploadForm from "./components/ImageUploadForm";
 
 function App() {
   return (

@@ -38,6 +38,11 @@ input:hover {
 } */
 
 /* latest css v2 */
+
+@font-face {
+  font-family: ;
+  src: url();
+}
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 
 ::-webkit-scrollbar {

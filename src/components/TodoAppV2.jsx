@@ -9,23 +9,227 @@ import {
   updateDoc,
   onSnapshot,
 } from "firebase/firestore";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
 import firebaseData from "./FirebaseData";
 import { useFirebase } from "./FirebaseDataProv";
 
+const storage = getStorage(firebaseData);
 const db = getFirestore(firebaseData);
 
 const StudentTodo = () => {
-  const { user, signOut } = useFirebase();
+  const { user } = useFirebase();
+  const [textData, setTextData] = useState("");
+  const [imageFile, setImageFile] = useState(null);
+  const [profileImageFile, setProfileImageFile] = useState(null);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [uploadedImages, setUploadedImages] = useState([]);
+  const [uploadedProfileImage, setUploadedProfileImage] = useState([]);
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setImageFile(file);
+  };
+
+  const handleProfileImageChange = (e) => {
+    const file = e.target.files[0];
+    setProfileImageFile(file);
+  };
+
+  const saveImageData = async () => {
+    try {
+      if (!imageFile) {
+        console.error("No image selected.");
+        return;
+      }
+
+      const storageRef = ref(
+        storage,
+        "images/" + Date.now() + "_" + imageFile.name
+      );
+
+      const uploadTask = uploadBytesResumable(
+        storageRef,
+        imageFile,
+        // Add an optional metadata object to the task
+        { contentType: imageFile.type }
+      );
+
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          setUploadProgress(progress);
+        },
+        (error) => {
+          console.error("Error during upload:", error);
+        },
+        async () => {
+          const imageUrl = await getDownloadURL(uploadTask.snapshot.ref);
+
+          await addDoc(collection(db, "students"), {
+            name: textData,
+            imageUrl: imageUrl,
+            timestamp: new Date().toISOString(),
+            createdBy: user.displayName,
+            createdByAcc: user.email,
+          });
+
+          setImageFile(null);
+          setUploadProgress(0);
+
+          console.log("Image and text data uploaded successfully!");
+
+          fetchUploadedImages();
+        }
+      );
+    } catch (error) {
+      console.error("Error adding image data:", error);
+    }
+  };
+  const saveProfileData = async () => {
+    try {
+      if (!profileImageFile) {
+        console.error("No image selected.");
+        return;
+      }
+
+      const storageRef = ref(
+        storage,
+        "profile-images/" + Date.now() + "_" + profileImageFile.name
+      );
+
+      const uploadTask = uploadBytesResumable(
+        storageRef,
+        profileImageFile,
+        // Add an optional metadata object to the task
+        { contentType: profileImageFile.type }
+      );
+
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          setUploadProgress(progress);
+        },
+        (error) => {
+          console.error("Error during upload:", error);
+        },
+        async () => {
+          const imageUrl = await getDownloadURL(uploadTask.snapshot.ref);
+
+          await addDoc(collection(db, "students"), {
+            profileImageUrl: imageUrl,
+            timestamp: new Date().toISOString(),
+            createdBy: user.displayName,
+            createdByAcc: user.email,
+          });
+
+          setProfileImageFile(null);
+          setUploadProgress(0);
+
+          console.log("Image and text data uploaded successfully!");
+
+          fetchProfileImg();
+        }
+      );
+    } catch (error) {
+      console.error("Error adding image data:", error);
+    }
+  };
+
+  const deleteImage = async (imageUrl) => {
+    try {
+      const querySnapshot = await getDocs(collection(db, "students"));
+      const docToDelete = querySnapshot.docs.find(
+        (doc) => doc.data().imageUrl === imageUrl
+      );
+
+      if (docToDelete) {
+        await deleteDoc(doc(db, "students", docToDelete.id));
+        console.log("Image deleted successfully!");
+        fetchUploadedImages();
+      } else {
+        console.error("Document not found for deletion.");
+      }
+    } catch (error) {
+      console.error("Error deleting image:", error);
+    }
+  };
+  const removeProfileImage = async (profileImageUrl) => {
+    try {
+      const querySnapshot = await getDocs(collection(db, "students"));
+      const docToDelete = querySnapshot.docs.find(
+        (doc) => doc.data().profileImageUrl === profileImageUrl
+      );
+
+      if (docToDelete) {
+        await deleteDoc(doc(db, "students", docToDelete.id));
+        console.log("Image deleted successfully!");
+        fetchProfileImg();
+      } else {
+        console.error("Document not found for deletion.");
+      }
+    } catch (error) {
+      console.error("Error deleting image:", error);
+    }
+  };
+
+  const fetchUploadedImages = async () => {
+    try {
+      const snapshot = await getDocs(collection(db, "students"));
+      const images = snapshot.docs
+        .filter((doc) => doc.data().imageUrl)
+        .map((doc) => doc.data().imageUrl);
+      setUploadedImages(images.reverse());
+    } catch (error) {
+      console.error("Error fetching uploaded images:", error);
+    }
+  };
+  const fetchProfileImg = async () => {
+    try {
+      const snapshot = await getDocs(collection(db, "students"));
+      const images = snapshot.docs
+        .filter((doc) => doc.data().profileImageUrl)
+        .map((doc) => doc.data().profileImageUrl);
+      setUploadedProfileImage(images.reverse());
+    } catch (error) {
+      console.error("Error fetching uploaded profile images:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUploadedImages();
+    fetchProfileImg();
+  }, []);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    saveImageData();
+  };
+  const handleProfileSubmit = (e) => {
+    e.preventDefault();
+    saveProfileData();
+  };
+  // profile  image
+
+  // studenttodo
   const studentDataProvider = { name: "", class: 0, age: 0 };
   const [studentData, setStudentData] = useState(studentDataProvider);
   const [printStudentData, setPrintStudentData] = useState([]);
-  const [SearchedData, setSearchedData] = useState("");
-  const [confermationOverlay, setconfermationOverlay] = useState(-1);
-  const [openMenuBar, setopenMenuBar] = useState(null);
+  const [searchedData, setSearchedData] = useState("");
+  const [confirmationOverlay, setConfirmationOverlay] = useState(-1);
+  const [openMenuBar, setOpenMenuBar] = useState(null);
   const [selectedStudent, setSelectedStudent] = useState(null);
-  const [updatingAgent, setupdatingAgent] = useState(null);
+  const [updatingAgent, setUpdatingAgent] = useState(null);
   const [handleUpdate, setHandleUpdate] = useState(false);
+
   const buttons = [
     {
       toggleMessagePopup: null,
@@ -41,18 +245,17 @@ const StudentTodo = () => {
     e.preventDefault();
     if (studentData.name.trim() !== "") {
       try {
-        // Save data to Firestore
+        const currentTime = new Date().toLocaleString();
         await addDoc(collection(db, "students"), {
           name: studentData.name,
-          timestamp: new Date().toLocaleString(),
-          timestamp2: new Date().toLocaleString(),
-          getHours: new Date().getHours().toLocaleString(),
-          getMinuts: new Date().getMinutes().toLocaleString(),
+          timestamp: currentTime,
+          timestamp2: currentTime,
+          getHours: new Date().getHours(),
+          getMinuts: new Date().getMinutes(),
           editedBy: user.displayName,
           editedByAcc: user.email,
         });
 
-        // Clear the form fields
         setStudentData(studentDataProvider);
       } catch (error) {
         console.error("Error adding student data:", error);
@@ -61,20 +264,22 @@ const StudentTodo = () => {
   };
 
   const fetchStudentData = async () => {
-    const snapshot = await getDocs(collection(db, "students"));
-    const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    try {
+      const snapshot = await getDocs(collection(db, "students"));
+      const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 
-    // Sort the data based on timestamp in descending order
-    const sortedData = data.sort(
-      (a, b) => new Date(b.timestamp) - new Date(a.timestamp)
-    );
+      const sortedData = data.sort(
+        (a, b) => new Date(b.timestamp) - new Date(a.timestamp)
+      );
 
-    setPrintStudentData(sortedData);
+      setPrintStudentData(sortedData);
+    } catch (error) {
+      console.error("Error fetching student data:", error);
+    }
   };
 
   const hideStudentInfo = async (id) => {
     try {
-      // Remove data from Firestore
       await deleteDoc(doc(db, "students", id));
     } catch (error) {
       console.error("Error removing student:", error);
@@ -90,7 +295,6 @@ const StudentTodo = () => {
     e.preventDefault();
     if (studentData.name.trim() !== "") {
       try {
-        // Update data in Firestore
         await updateDoc(doc(db, "students", selectedStudent), {
           name: studentData.name,
           timestamp2: new Date().toLocaleString(),
@@ -98,7 +302,6 @@ const StudentTodo = () => {
           editedByAcc: user.email,
         });
 
-        // Clear the form fields and reset selected student
         setStudentData(studentDataProvider);
         setSelectedStudent(null);
       } catch (error) {
@@ -108,11 +311,9 @@ const StudentTodo = () => {
   };
 
   useEffect(() => {
-    // Fetch and update the student data from Firestore
     const unsubscribe = onSnapshot(collection(db, "students"), (snapshot) => {
       const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 
-      // Sort the data based on timestamp in descending order
       const sortedData = data.sort(
         (a, b) => new Date(b.timestamp) - new Date(a.timestamp)
       );
@@ -120,35 +321,123 @@ const StudentTodo = () => {
       setPrintStudentData(sortedData);
     });
 
-    return () => unsubscribe(); // Unsubscribe when component unmounts
+    return () => unsubscribe();
   }, []);
 
-  const studentDataOutPut = printStudentData.filter((studentSearch) =>
-    studentSearch.name.toLowerCase().includes(SearchedData.toLowerCase())
+  const studentDataOutput = printStudentData.filter(
+    (studentSearch) =>
+      studentSearch.name &&
+      studentSearch.name.toLowerCase().includes(searchedData.toLowerCase())
   );
+
   const blankInput = () => {
     setStudentData(studentDataProvider);
     setHandleUpdate(false);
   };
+
   return (
     <>
+      <div>
+        <h2>Upload Image</h2>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label>
+              Text Data:
+              <input
+                type="text"
+                value={textData}
+                onChange={(e) => setTextData(e.target.value)}
+              />
+            </label>
+          </div>
+          <div>
+            <label>
+              Image:
+              <input type="file" onChange={handleImageChange} />
+            </label>
+          </div>
+          <div>
+            <button type="submit">Upload</button>
+          </div>
+        </form>
+        //////////////
+        <form onSubmit={handleProfileSubmit}>
+          <div>
+            <label>
+              Text Data:
+              <input
+                type="text"
+                value={textData}
+                onChange={(e) => setTextData(e.target.value)}
+              />
+            </label>
+          </div>
+          <div>
+            <label>
+              Image:
+              <input type="file" onChange={handleProfileImageChange} />
+            </label>
+          </div>
+          <div>
+            <button type="submit">Upload profile</button>
+          </div>
+        </form>
+        <h2>Upload Progress</h2>
+        <div>
+          <progress value={uploadProgress} max="100"></progress>
+          {uploadProgress > 0 && <p>{uploadProgress.toFixed(2)}% Uploaded</p>}
+        </div>
+        \<h2>Uploaded Images</h2>
+        <div>
+          {uploadedImages.map((imageUrl, index) => (
+            <React.Fragment key={index}>
+              <button onClick={() => deleteImage(imageUrl)}>Delete</button>
+              <img
+                src={imageUrl}
+                alt={`Uploaded ${index + 1}`}
+                style={{
+                  maxWidth: "200px",
+                  maxHeight: "200px",
+                  margin: "10px",
+                }}
+              />
+            </React.Fragment>
+          ))}
+          {uploadedProfileImage.map((imageUrl, index) => (
+            <React.Fragment key={index}>
+              <button onClick={() => removeProfileImage(imageUrl)}>
+                Remove Profile
+              </button>
+              <img
+                src={imageUrl}
+                alt={`Uploaded ${index + 1}`}
+                style={{
+                  maxWidth: "200px",
+                  maxHeight: "200px",
+                  margin: "10px",
+                }}
+              />
+            </React.Fragment>
+          ))}
+        </div>
+      </div>
       <div
         id="todov2"
-        className="bg-[#F6F7F9] min-h-screen max-h-screen overflow-auto pt-14 flex flex-col justify-between bg-gradient-to-b from-red-200 to-yellow-100">
+        className="bg-[#F6F7F9] min-h-screen max-h-screen overflow-auto pt-14 flex flex-col justify-between bg-gradient-to-t from-red-200 to-yellow-100">
         <div className="container lg:max-w-[992px] xl:max-w-[1140px] 2xl:max-w-[1320px] mx-auto flex flex-col-reverse grow  pb-16 md:pb-24">
-          {studentDataOutPut.length > 0 && (
+          {studentDataOutput.length > 0 && (
             <>
-              {studentDataOutPut.map((data, i) => (
+              {studentDataOutput.map((data, i) => (
                 <>
-                  <div className=" flex max-h-full overflow-auto flex-col pb-4 ">
+                  <div className=" flex max-h-full overflow-auto flex-col pb-2 lg:pb-4 ">
                     <div
-                      className={`flex items-end max-w-[526px] mt-3 w-full  ${
+                      className={`flex items-end max-w-[526px] mt-2 sm:mt-3 w-full  ${
                         data.editedBy === user.displayName
                           ? "!justify-end ml-auto"
                           : "mr-auto"
                       }`}>
                       <div
-                        className={` mx-3 md:ml-5 md:mr-[30px] inline-flex md:items-end gap-2 md:gap-x-3 items-center ${
+                        className={`md:ml-5 md:mr-[30px] inline-flex md:items-end gap-2 md:gap-x-3 items-center ${
                           data.editedBy === user.displayName
                             ? "flex-row-reverse"
                             : ""
@@ -310,7 +599,7 @@ const StudentTodo = () => {
                             <span className="inline-block select-none">
                               {data.getHours}:
                               {data.getMinuts < 10
-                                ? 0 + data.getMinuts
+                                ? `0` + data.getMinuts
                                 : data.getMinuts}
                             </span>
                           </div>
@@ -323,71 +612,92 @@ const StudentTodo = () => {
             </>
           )}
         </div>
-        <div className="bg-gradient-to-r from-blue-200 via-purple-100 to-pink-200 min-h-24 max-h-24 flex justify-center items-center py-3 md:py-[18px] fixed bottom-0 w-full">
-          <form
-            onSubmit={saveNewData}
-            action=""
-            className={`md:my-3 w-full  ${
-              handleUpdate === true ? "hidden" : "block"
-            }  `}>
-            <div className="flex flex-wrap justify-center">
-              <div className="px-2 w-full md:w-8/12 mx-1 relative">
-                <input
-                  className="w-full border-[1px] pl-4 pr-20 py-2 md:py-3 border-[#6297e1] rounded-[8px] outline-none"
-                  type="text"
-                  name="name"
-                  placeholder="Message..."
-                  onChange={(e) =>
-                    setStudentData({ ...studentData, name: e.target.value })
-                  }
-                  value={studentData.name}
-                />{" "}
-                <div className="text-center absolute top-1/2 -translate-y-1/2 right-[13px]">
-                  {studentData.name.trim() !== "" && (
+        <div className="bg-gradient-to-l from-blue-200 via-purple-100 min-h-24 max-h-24 flex justify-center items-center py-3 md:py-[18px] fixed bottom-0 w-full shadow-black shadow-2xl backdrop-blur-[20px]">
+          {handleUpdate === false && (
+            <form
+              onSubmit={saveNewData}
+              action=""
+              className={`md:my-3 w-full  ${
+                handleUpdate === true ? "!hidden" : "!block"
+              }  `}>
+              <div className="flex flex-wrap justify-center">
+                <div className="px-2 w-full md:w-8/12 mx-1 relative">
+                  <input
+                    className="w-full border-[1px] pl-4 pr-11 md:pr-[50px] py-2 md:py-3 border-[#6297e1] rounded-[8px] outline-none"
+                    type="text"
+                    name="name"
+                    placeholder="Message..."
+                    onChange={(e) =>
+                      setStudentData({ ...studentData, name: e.target.value })
+                    }
+                    value={studentData.name}
+                  />{" "}
+                  <div className="text-center absolute top-1/2 -translate-y-1/2 right-[13px] flex justify-center items-center">
+                    {studentData.name.trim() !== "" && (
+                      <button
+                        className="transition-all duration-300 pr-2 hover:scale-[1.1]"
+                        type="submit">
+                        <svg
+                          width="25"
+                          height="25"
+                          className="w-[20px] md:w-[25px]"
+                          viewBox="0 0 29 25"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg">
+                          <path
+                            d="M0.429688 24.1667V15.4167L12.0964 12.5L0.429688 9.58333V0.833328L28.138 12.5L0.429688 24.1667Z"
+                            fill="black"
+                          />
+                        </svg>
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </form>
+          )}
+
+          {handleUpdate && (
+            <form
+              onSubmit={handleUpdateData}
+              action=""
+              className={`my-4 w-full  ${
+                handleUpdate ? "!block" : "!hidden"
+              } `}>
+              <div className="flex flex-wrap justify-center">
+                <div className="my-2 px-2 w-full md:w-8/12 mx-1 relative">
+                  <input
+                    className="w-full border-[1px] pl-4 pr-40 py-2 border-[#6297e1] rounded-[8px] outline-none"
+                    type="text"
+                    name="name"
+                    placeholder="Message..."
+                    onChange={(e) =>
+                      setStudentData({ ...studentData, name: e.target.value })
+                    }
+                    value={studentData.name}
+                  />{" "}
+                  <div className="text-center flex gap-2 absolute right-4 top-1/2 -translate-y-1/2 items-center justify-center">
+                    <span
+                      onClick={() => {
+                        blankInput();
+                      }}
+                      className="px-5 py-[4px] bg-slate-800 text-white hover:bg-slate-200 hover:text-black transition-all duration-300 rounded-[4px] ">
+                      cancel
+                    </span>
                     <button
-                      className="px-5 py-[4px] bg-slate-800 text-white hover:bg-slate-200 hover:text-black transition-all duration-300 rounded-[4px]"
+                      onClick={() => {
+                        setHandleUpdate(false);
+                        blankInput();
+                      }}
+                      className="px-5 py-[4px] bg-slate-800 text-white hover:bg-slate-200 hover:text-black transition-all duration-300 rounded-[4px] "
                       type="submit">
-                      Send
+                      update
                     </button>
-                  )}
+                  </div>
                 </div>
               </div>
-            </div>
-          </form>
-          <form
-            onSubmit={handleUpdateData}
-            action=""
-            className={`my-4 w-full  ${handleUpdate ? "block" : "hidden"} `}>
-            <div className="flex flex-wrap justify-center ">
-              <div className="my-2 px-2 w-full md:w-8/12 mx-1 relative">
-                <input
-                  className="w-full border-[1px] pl-4 pr-40 py-2 border-[#6297e1] rounded-[8px] outline-none"
-                  type="text"
-                  name="name"
-                  placeholder="Message..."
-                  onChange={(e) =>
-                    setStudentData({ ...studentData, name: e.target.value })
-                  }
-                  value={studentData.name}
-                />{" "}
-                <div className="text-center flex gap-2 absolute right-4 top-1/2 -translate-y-1/2 items-center justify-center">
-                  <span
-                    onClick={() => {
-                      blankInput();
-                    }}
-                    className="px-5 py-[4px] bg-slate-800 text-white hover:bg-slate-200 hover:text-black transition-all duration-300 rounded-[4px] ">
-                    cancel
-                  </span>
-                  <button
-                    onClick={() => setHandleUpdate(false)}
-                    className="px-5 py-[4px] bg-slate-800 text-white hover:bg-slate-200 hover:text-black transition-all duration-300 rounded-[4px] "
-                    type="submit">
-                    update
-                  </button>
-                </div>
-              </div>
-            </div>
-          </form>
+            </form>
+          )}
         </div>
       </div>
     </>
