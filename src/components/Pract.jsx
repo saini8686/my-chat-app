@@ -321,6 +321,7 @@ const StudentTodo = () => {
                     className="px-5 py-[4px] bg-slate-800 text-white hover:bg-slate-200 hover:text-black transition-all duration-300 rounded-[4px] "
                     type="submit">
                     update
+                    
                   </button>
                 </div>
               </div>
