@@ -5,6 +5,7 @@ import firebase from "firebase/compat/app";
 import "./index.css";
 import "firebase/compat/auth";
 import { FirebaseProvider } from "./components/FirebaseDataProv";
+import { BrowserRouter } from "react-router-dom";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBJV9TJi5hYWnTbHyJH8VC45zfFtu5xZls",
@@ -19,10 +20,10 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 ReactDOM.render(
-  <React.StrictMode>
+  <BrowserRouter>
     <FirebaseProvider>
       <App />
     </FirebaseProvider>
-  </React.StrictMode>,
+  </BrowserRouter>,
   document.getElementById("root")
 );
