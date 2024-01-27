@@ -608,7 +608,9 @@ const MyChatApp = () => {
                               </ul>
                             </div>
                           )}
-
+                          <h4 className="absolute right-4 -top-2 font-light duration-300 select-none">
+                            <span className="text-[10px]">{data.editedBy}</span>
+                          </h4>
                           <div className="time_stamp relative overflow-visible flex justify-between w-full items-center -mb-2">
                             <span
                               className={`absolute top-0 right-0  w-full flex items-center justify-end pointer-events-none opacity-0 transition-all duration-300   ${
@@ -650,6 +652,7 @@ const MyChatApp = () => {
                                 />
                               </svg>
                             </span>
+
                             {data.timestamp !== data.timestamp2 && (
                               <h4 className="absolute left-0 top-0 font-light duration-300 select-none">
                                 <span className="text-[10px]">Edited</span>

@@ -14,7 +14,7 @@ import { useFirebase } from "./FirebaseDataProv";
 
 const db = getFirestore(firebaseData);
 
-const StudentTodo = () => {
+const TodoApp = () => {
   const { user, signOut } = useFirebase();
 
   const studentDataProvider = { name: "", class: 0, age: 0 };
@@ -435,4 +435,4 @@ const StudentTodo = () => {
   );
 };
 
-export default StudentTodo;
+export default TodoApp;
