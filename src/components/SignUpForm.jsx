@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 
 import Preloader from "./Preloader";
 import TodoApp from "./TodoApp";
+import TodoAppV2 from "./TodoAppV2";
 
 const SignUpForm = () => {
   const { signUpWithEmail, signInWithGoogle, error, user } = useFirebase();
@@ -191,9 +192,9 @@ const SignUpForm = () => {
             </>
           ) : (
             <div className="relative z-10">
-              <TodoApp />
+              {/* <TodoApp /> */}
               {/* // <Pract /> */}
-              {/* <TodoAppV2 /> */}
+              <TodoAppV2 />
             </div>
           )}
         </div>
